@@ -20,6 +20,13 @@ func _physics_process(delta) -> void:
 			movement(delta)
 			move_slide_gravity(delta)
 
+func _input(event) -> void:
+	if event is InputEventKey:
+		if event.keycode == KEY_ESCAPE:
+			get_tree().quit()
+	if event is InputEventMouseMotion:
+		move_camera(event.relative.x, event.relative.y)
+
 func move_slide_gravity(delta):
 	velocity.y -= GRAVITY * delta
 	move_and_slide()
@@ -28,18 +35,10 @@ func movement(delta, disable_jump = false) -> void:
 	var move : Vector3 =  head.global_basis * get_movement_vector3()
 	velocity = move  * current_speed * delta
 	if(!disable_jump and is_on_floor() and Input.is_action_just_pressed("jump")):
-		print("jump!")
 		velocity.y += 200
 
 func camera_input() -> void:
 	move_camera(Input.get_axis("head_left", "head_right"), Input.get_axis("head_up", "head_down"))
-
-func _input(event) -> void:
-	if event is InputEventKey:
-		if event.keycode == KEY_ESCAPE:
-			get_tree().quit()
-	if event is InputEventMouseMotion:
-		move_camera(event.relative.x, event.relative.y)
 
 func move_camera(x : float, y : float, sensitivity_h := 0.1, sensitivity_v := 0.1 ) -> void:
 	head.rotation_degrees.y -= x * sensitivity_h	
@@ -53,4 +52,5 @@ func get_movement_vector3() -> Vector3:
 	var move_vect := get_movement_vector2()
 	var move_vect3 := Vector3(move_vect.x, 0, move_vect.y)
 	return move_vect3
+
 

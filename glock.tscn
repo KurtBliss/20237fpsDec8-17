@@ -1,0 +1,9 @@
+[gd_scene load_steps=2 format=3 uid="uid://qxurfbirsyae"]
+
+[ext_resource type="PackedScene" uid="uid://c4sdvpkb01x3x" path="res://assets/low-poly-glock/glock.glb" id="1_vhlkc"]
+
+[node name="Glock" type="Node3D"]
+
+[node name="glock" parent="." instance=ExtResource("1_vhlkc")]
+
+[editable path="glock"]
