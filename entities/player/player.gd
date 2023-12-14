@@ -12,6 +12,8 @@ const GRAVITY := 800.0
 
 func _ready() -> void:
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	Ref.player = self
+	Ref.fetch_player_hud()
 
 func _physics_process(delta) -> void:
 	match state:

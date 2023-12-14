@@ -1,0 +1,28 @@
+[gd_scene load_steps=6 format=3 uid="uid://604e881208kq"]
+
+[ext_resource type="Script" path="res://entities/bullet/bullet.gd" id="1_5itnu"]
+[ext_resource type="Script" path="res://entities/bullet/mesh.gd" id="2_ndrta"]
+[ext_resource type="Material" uid="uid://dppx87eas131p" path="res://entities/bullet/bullet_material.tres" id="2_qumoc"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_myidu"]
+
+[sub_resource type="ImmediateMesh" id="ImmediateMesh_kykcx"]
+
+[node name="Bullet" type="Area3D"]
+script = ExtResource("1_5itnu")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_myidu")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+top_level = true
+material_override = ExtResource("2_qumoc")
+mesh = SubResource("ImmediateMesh_kykcx")
+script = ExtResource("2_ndrta")
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+autostart = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

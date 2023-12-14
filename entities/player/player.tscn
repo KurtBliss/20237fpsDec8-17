@@ -1,13 +1,172 @@
-[gd_scene load_steps=4 format=3 uid="uid://dvysc4gtdeggl"]
+[gd_scene load_steps=16 format=3 uid="uid://dvysc4gtdeggl"]
 
 [ext_resource type="Script" path="res://entities/player/player.gd" id="1_iep2l"]
+[ext_resource type="Script" path="res://entities/player/player_weapon.gd" id="2_5pho7"]
+[ext_resource type="PackedScene" uid="uid://qxurfbirsyae" path="res://entities/weapons/glock.tscn" id="2_j3a38"]
+[ext_resource type="Script" path="res://entities/player/anim_camera_bounce.gd" id="4_jye7y"]
+[ext_resource type="Script" path="res://entities/player/repair_area.gd" id="5_lb0bk"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_meq0d"]
+radius = 1.5
+height = 3.0
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_l4d0o"]
 
+[sub_resource type="GDScript" id="GDScript_takaf"]
+script/source = "extends Marker3D
+
+var previous_rotation = rotation
+
+func _input(event) -> void:
+	if event is InputEventMouseMotion:
+		sway(event.relative.x, event.relative.y)
+
+func _physics_process(_delta):
+	sway(Input.get_axis(\"head_left\", \"head_right\"), Input.get_axis(\"head_up\", \"head_down\"))
+	rotation = rotation.lerp(Vector3.ZERO, 0.1)
+
+func sway(x, y):
+	rotation.y = lerp_angle(rotation.y, rotation.y - x / 44, 0.1)
+	rotation.x = lerp_angle(rotation.x, rotation.x - y / 44, 0.1)
+	
+func get_weapon():
+	for child in get_children():
+		if visible:
+			return child
+
+func get_muzzle_position():
+	return get_weapon().get_muzzle_position()
+"
+
+[sub_resource type="Animation" id="Animation_rdt6d"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/WeaponMarker:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0.449286, -0.533847, -1.04287)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Camera3D/WeaponMarker:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0asyf"]
+resource_name = "fire"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D/WeaponMarker:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0.449286, -0.533847, -1.04287), Vector3(0.494, -0.494, -1.043), Vector3(0.449286, -0.533847, -1.04287)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Camera3D/WeaponMarker:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.2, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.139626, 0, 0), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vqpdd"]
+_data = {
+"RESET": SubResource("Animation_rdt6d"),
+"fire": SubResource("Animation_0asyf")
+}
+
+[sub_resource type="Animation" id="Animation_h6sp8"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D:v_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Camera3D:fov")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [75.0]
+}
+
+[sub_resource type="Animation" id="Animation_m0fv4"]
+resource_name = "moving"
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Head/Camera3D:v_offset")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [0.0, -0.1, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Head/Camera3D:fov")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.5, 1),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 0,
+"values": [75.0, 70.0, 75.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_bhyex"]
+_data = {
+"RESET": SubResource("Animation_h6sp8"),
+"moving": SubResource("Animation_m0fv4")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hjfrx"]
+size = Vector3(5, 5, 5)
+
 [node name="PlayerBody" type="CharacterBody3D" groups=["player_body"]]
 script = ExtResource("1_iep2l")
+
+[node name="PlayerWeapon" type="Node" parent="."]
+script = ExtResource("2_5pho7")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_meq0d")
@@ -20,3 +179,34 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.775218, 0)
 
 [node name="Camera3D" type="Camera3D" parent="Head"]
 current = true
+
+[node name="WeaponMarker" type="Marker3D" parent="Head/Camera3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0.449286, -0.533847, -1.04287)
+script = SubResource("GDScript_takaf")
+
+[node name="Glock" parent="Head/Camera3D/WeaponMarker" instance=ExtResource("2_j3a38")]
+
+[node name="AnimWeaponBounce" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_vqpdd")
+}
+
+[node name="AnimCameraBounce" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_bhyex")
+}
+script = ExtResource("4_jye7y")
+
+[node name="RepairArea" type="Area3D" parent="."]
+collision_layer = 4
+collision_mask = 4
+script = ExtResource("5_lb0bk")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="RepairArea"]
+shape = SubResource("BoxShape3D_hjfrx")
+
+[node name="Timer" type="Timer" parent="RepairArea"]
+
+[connection signal="body_entered" from="RepairArea" to="RepairArea" method="_on_body_entered"]
+[connection signal="body_exited" from="RepairArea" to="RepairArea" method="_on_body_exited"]
+[connection signal="timeout" from="RepairArea/Timer" to="RepairArea" method="_on_timer_timeout"]

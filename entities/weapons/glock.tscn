@@ -1,0 +1,88 @@
+[gd_scene load_steps=18 format=3 uid="uid://qxurfbirsyae"]
+
+[ext_resource type="PackedScene" uid="uid://c4sdvpkb01x3x" path="res://assets/low-poly-glock/glock.glb" id="1_vhlkc"]
+[ext_resource type="Script" path="res://entities/weapons/weapon.gd" id="1_ym6ey"]
+[ext_resource type="Texture2D" uid="uid://jhjln6oomjr" path="res://assets/muzzleflash/frame0001.png" id="3_7csgk"]
+[ext_resource type="Texture2D" uid="uid://bxpeupuw3qbiv" path="res://assets/muzzleflash/frame0002.png" id="4_n6c41"]
+[ext_resource type="Texture2D" uid="uid://boh27poeuy1gi" path="res://assets/muzzleflash/frame0003.png" id="5_x6ltj"]
+[ext_resource type="Texture2D" uid="uid://bsd4kll8xfuux" path="res://assets/muzzleflash/frame0004.png" id="6_g8vtl"]
+[ext_resource type="Texture2D" uid="uid://bagcph5aoij1t" path="res://assets/muzzleflash/frame0005.png" id="7_yoqqe"]
+[ext_resource type="Texture2D" uid="uid://c6yugyh6ojm0k" path="res://assets/muzzleflash/frame0006.png" id="8_ib8gh"]
+[ext_resource type="Texture2D" uid="uid://ddp537fmmr35c" path="res://assets/muzzleflash/frame0007.png" id="9_pmhke"]
+[ext_resource type="Texture2D" uid="uid://b18cuwj101wse" path="res://assets/muzzleflash/frame0008.png" id="10_rrili"]
+[ext_resource type="Texture2D" uid="uid://1ykfqhco1lbu" path="res://assets/muzzleflash/frame0009.png" id="11_eqsn0"]
+[ext_resource type="Texture2D" uid="uid://btod7f0toihpt" path="res://assets/muzzleflash/frame0010.png" id="12_2jk6t"]
+[ext_resource type="Texture2D" uid="uid://jed0d5n4y082" path="res://assets/muzzleflash/frame0011.png" id="13_ffrmt"]
+[ext_resource type="Texture2D" uid="uid://d3xvqgkuj1j0y" path="res://assets/muzzleflash/frame0012.png" id="14_vpiq0"]
+[ext_resource type="Texture2D" uid="uid://jknbheprjt3d" path="res://assets/muzzleflash/frame0013.png" id="15_wqgu8"]
+[ext_resource type="Texture2D" uid="uid://bmwb0wldg3lvn" path="res://assets/muzzleflash/frame0014.png" id="16_hqag5"]
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_6kgfv"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("3_7csgk")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_n6c41")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_x6ltj")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_g8vtl")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_yoqqe")
+}, {
+"duration": 1.0,
+"texture": ExtResource("8_ib8gh")
+}, {
+"duration": 1.0,
+"texture": ExtResource("9_pmhke")
+}, {
+"duration": 1.0,
+"texture": ExtResource("10_rrili")
+}, {
+"duration": 1.0,
+"texture": ExtResource("11_eqsn0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("12_2jk6t")
+}, {
+"duration": 1.0,
+"texture": ExtResource("13_ffrmt")
+}, {
+"duration": 1.0,
+"texture": ExtResource("14_vpiq0")
+}, {
+"duration": 1.0,
+"texture": ExtResource("15_wqgu8")
+}, {
+"duration": 1.0,
+"texture": ExtResource("16_hqag5")
+}],
+"loop": false,
+"name": &"default",
+"speed": 5.0
+}]
+
+[node name="Glock" type="Node3D"]
+script = ExtResource("1_ym6ey")
+
+[node name="glock" parent="." instance=ExtResource("1_vhlkc")]
+transform = Transform3D(-8.74228e-09, 0, 0.2, 0, 0.2, 0, -0.2, 0, -8.74228e-09, 0, 0, 0)
+
+[node name="AnimatedSprite3D" type="AnimatedSprite3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -1)
+visible = false
+pixel_size = 0.0025
+sprite_frames = SubResource("SpriteFrames_6kgfv")
+
+[node name="Muzzle" type="Marker3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.21071, -0.398847)
+
+[node name="OmniLight3D" type="OmniLight3D" parent="Muzzle"]
+light_energy = 0.0
+
+[editable path="glock"]
