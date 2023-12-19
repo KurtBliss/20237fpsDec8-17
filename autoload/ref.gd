@@ -1,6 +1,8 @@
+class_name AutoloadRef
 extends Node
 var player : PlayerBody
 var hud : Hud
+var waves : Waves
 
 func fetch_player_body():
 	if is_instance_valid(player):
@@ -8,6 +10,15 @@ func fetch_player_body():
 	var players = get_tree().get_nodes_in_group("player_body")
 	if players.size() > 0:
 		player = players[0]
+		return true
+	return false
+	
+func fetch_wave():
+	if is_instance_valid(waves):
+		return true
+	var waves_group = get_tree().get_nodes_in_group("wave")
+	if waves_group.size() > 0:
+		waves = waves_group[0]
 		return true
 	return false
 

@@ -55,4 +55,7 @@ func get_movement_vector3() -> Vector3:
 	var move_vect3 := Vector3(move_vect.x, 0, move_vect.y)
 	return move_vect3
 
-
+func _on_interact_area_area_entered(area):
+	if area is PickupAmmo:
+		Player.ammo += area.ammo
+		area.queue_free()

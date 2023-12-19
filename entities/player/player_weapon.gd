@@ -12,6 +12,9 @@ func _process(_delta):
 		fire()
 
 func fire(speed = 300):
+	if Player.ammo <= 0:
+		return
+	Player.ammo -= 1
 	var bullet_inst : Bullet = bullet_scn.instantiate()
 	player.add_sibling(bullet_inst)
 	bullet_inst.movement = -camera.global_basis.z * 300

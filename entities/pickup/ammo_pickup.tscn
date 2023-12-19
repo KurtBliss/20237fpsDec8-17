@@ -1,0 +1,23 @@
+[gd_scene load_steps=6 format=3 uid="uid://8rx010ubxaw6"]
+
+[ext_resource type="Script" path="res://entities/pickup/ammo_pickup.gd" id="1_6rh88"]
+[ext_resource type="Texture2D" uid="uid://cngmgryhr7k35" path="res://assets/prototype-textures-kenney/Green/texture_01.png" id="1_ly4qp"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vs1st"]
+albedo_texture = ExtResource("1_ly4qp")
+
+[sub_resource type="BoxMesh" id="BoxMesh_cb3wg"]
+material = SubResource("StandardMaterial3D_vs1st")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vo2p5"]
+
+[node name="AmmoPickup" type="Area3D" groups=["ammo_pickups"]]
+script = ExtResource("1_6rh88")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_cb3wg")
+skeleton = NodePath("../CollisionShape3D")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_vo2p5")

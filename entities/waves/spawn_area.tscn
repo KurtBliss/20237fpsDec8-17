@@ -1,0 +1,11 @@
+[gd_scene load_steps=3 format=3 uid="uid://b1sjncxusaffd"]
+
+[ext_resource type="Script" path="res://entities/waves/spawn_area.gd" id="1_t8wdv"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_oj1xu"]
+transparency = 1
+albedo_color = Color(0.615686, 0.490196, 0.184314, 0.709804)
+
+[node name="SpawnArea" type="MeshInstance3D" groups=["spawn_points"]]
+material_override = SubResource("StandardMaterial3D_oj1xu")
+script = ExtResource("1_t8wdv")

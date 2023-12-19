@@ -30,7 +30,6 @@ func process_window(window : WindowLink):
 		if attack_timer.is_stopped():
 			attack_timer.start()
 	else:
-		print("returning...")
 		global_position.x = link["link_exit_position"].x
 		global_position.z = link["link_exit_position"].z
 		link = {}
@@ -65,9 +64,6 @@ func update_target_position():
 	agent.target_position = Ref.player.global_position
 
 func _on_navigation_agent_3d_link_reached(details):
-	print(details)
-	print(details["owner"])
-	print(details["owner"] is WindowLink)
 	if details["owner"] is WindowLink:
 		link = details
 		state = WINDOW
@@ -94,4 +90,7 @@ func on_bullet_hit(dmg):
 	health -= dmg
 	anim_hurt.play("hurt")
 	if health <= 0:
+		Player.points += 100
 		queue_free()
+	else:
+		Player.points += 10

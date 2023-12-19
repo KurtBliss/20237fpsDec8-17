@@ -1,0 +1,13 @@
+[gd_scene load_steps=2 format=3 uid="uid://cyws8fg4hln08"]
+
+[ext_resource type="Script" path="res://entities/waves/waves.gd" id="1_rchnv"]
+
+[node name="Waves" type="Node3D" groups=["wave"]]
+script = ExtResource("1_rchnv")
+zombies_for_wave_easing = 8.5171
+
+[node name="Timer" type="Timer" parent="."]
+wait_time = 3.0
+one_shot = true
+
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

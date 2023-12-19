@@ -1,7 +1,8 @@
 class_name AutoloadPlayer
 extends Node
 var health = 100
-var score = 0
+var points = 0
+var ammo = 20
 
 func take_damage(dmg = 15):
 	health -= dmg

@@ -14,7 +14,6 @@ height = 3.0
 
 [sub_resource type="GDScript" id="GDScript_takaf"]
 script/source = "extends Marker3D
-
 var previous_rotation = rotation
 
 func _input(event) -> void:
@@ -197,6 +196,11 @@ libraries = {
 }
 script = ExtResource("4_jye7y")
 
+[node name="Area3D" type="Area3D" parent="."]
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="Area3D"]
+shape = SubResource("BoxShape3D_hjfrx")
+
 [node name="RepairArea" type="Area3D" parent="."]
 collision_layer = 4
 collision_mask = 4
@@ -207,6 +211,7 @@ shape = SubResource("BoxShape3D_hjfrx")
 
 [node name="Timer" type="Timer" parent="RepairArea"]
 
+[connection signal="area_entered" from="Area3D" to="." method="_on_interact_area_area_entered"]
 [connection signal="body_entered" from="RepairArea" to="RepairArea" method="_on_body_entered"]
 [connection signal="body_exited" from="RepairArea" to="RepairArea" method="_on_body_exited"]
 [connection signal="timeout" from="RepairArea/Timer" to="RepairArea" method="_on_timer_timeout"]

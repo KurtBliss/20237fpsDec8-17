@@ -8,7 +8,6 @@ var last_position : Vector3 =Vector3.ZERO
 @onready var mesh_instance_3d : MeshInstance3D = $MeshInstance3D
 
 func _ready():
-	print(get_parent())
 	mesh_instance_3d.reparent.call_deferred(get_parent(),true)
 
 func _physics_process(delta) -> void:
@@ -36,6 +35,7 @@ func process_body(body : Node3D, hit_position : Vector3 = global_position) -> vo
 func raycast_direct(from, to, exclude = [self]):
 	var space_state = get_world_3d().get_direct_space_state()
 	var params = PhysicsRayQueryParameters3D.create(from, to, 0xFFFFFFFF, exclude)
+	params.collision_mask = collision_mask
 	var hit = space_state.intersect_ray(params)
 	return hit
 
