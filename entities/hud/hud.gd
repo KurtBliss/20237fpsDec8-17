@@ -13,6 +13,6 @@ func _process(_delta):
 	if Ref.fetch_wave():
 		wave.text = str(Ref.waves.current_wave)
 	points.text = str(Player.points)
-	ammo.text = str(Player.ammo)
+	ammo.text = str(floor(Player.ammo))
 
 

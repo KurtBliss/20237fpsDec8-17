@@ -185,6 +185,8 @@ script = SubResource("GDScript_takaf")
 
 [node name="Glock" parent="Head/Camera3D/WeaponMarker" instance=ExtResource("2_j3a38")]
 
+[node name="Area3D" type="Area3D" parent="Head/Camera3D/WeaponMarker"]
+
 [node name="AnimWeaponBounce" type="AnimationPlayer" parent="."]
 libraries = {
 "": SubResource("AnimationLibrary_vqpdd")
@@ -212,6 +214,7 @@ shape = SubResource("BoxShape3D_hjfrx")
 [node name="Timer" type="Timer" parent="RepairArea"]
 
 [connection signal="area_entered" from="Area3D" to="." method="_on_interact_area_area_entered"]
+[connection signal="body_entered" from="Area3D" to="." method="_on_area_3d_body_entered"]
 [connection signal="body_entered" from="RepairArea" to="RepairArea" method="_on_body_entered"]
 [connection signal="body_exited" from="RepairArea" to="RepairArea" method="_on_body_exited"]
 [connection signal="timeout" from="RepairArea/Timer" to="RepairArea" method="_on_timer_timeout"]

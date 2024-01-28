@@ -59,3 +59,8 @@ func _on_interact_area_area_entered(area):
 	if area is PickupAmmo:
 		Player.ammo += area.ammo
 		area.queue_free()
+
+
+func _on_area_3d_body_entered(body):
+	if body is Zombie:
+		body.velocity += velocity * 100

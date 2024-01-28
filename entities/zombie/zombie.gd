@@ -11,6 +11,7 @@ var grab_body : PlayerBody
 var health = 100
 @onready var anim_hurt = $AnimHurt
 var link  : Dictionary = {}
+const AMMO_PICKUP = preload("res://entities/pickup/ammo_pickup.tscn")
 
 func _physics_process(delta):
 	match state:
@@ -91,6 +92,17 @@ func on_bullet_hit(dmg):
 	anim_hurt.play("hurt")
 	if health <= 0:
 		Player.points += 100
-		queue_free()
+		die()
 	else:
 		Player.points += 10
+
+func spawn_ammo_pickup():
+	var inst = AMMO_PICKUP.instantiate()
+	add_sibling(inst)
+	inst.global_position = global_position
+	inst.global_position.y += 2.3
+
+func die():
+	if randi_range(1, 3) == 3:
+		spawn_ammo_pickup()
+	queue_free()
